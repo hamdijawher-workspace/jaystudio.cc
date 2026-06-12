@@ -1,31 +1,36 @@
 # JAY STUDIO
 
-Premium creative production studio website built with Next.js, React, TypeScript, and Tailwind CSS.
+Portfolio website for JAY STUDIO, built with Next.js, React, TypeScript, and
+custom responsive CSS.
 
 ## Run locally
 
 ```bash
-cd /Users/mac/Documents/JAY-STUDIO
+npm install
 npm run dev
 ```
 
 Open `http://localhost:3000`.
 
-Dependencies are already installed. If you need to reinstall them on this Mac,
-use the isolated cache because the default npm cache currently has broken file
-ownership:
+## Verify a production build
 
 ```bash
-npm_config_cache=/private/tmp/jay-studio-npm-cache npm install
+npm run typecheck
+npm run build
 ```
 
-## Replace media
+The static production export is written to `out`.
 
-Project images and video URLs live in `lib/content.ts`. The hero and wedding imagery are declared near their matching components in `components/studio-site.tsx`.
+## Project media
 
-Replace any placeholder URL with a local file path placed under `public/media`, for example:
+Featured project images and videos are configured in `lib/content.ts`.
+Photography assets live under `public/projects/aurea-event`.
+
+Place replacement files under `public/projects`, then update the matching
+content entry:
 
 ```ts
-image: "/media/aurea-cover.jpg",
-video: "/media/aurea-film.mp4"
+image: "/projects/project-cover.jpg",
+previewVideo: "/projects/project-preview.mp4",
+playbackVideo: "/projects/project-web.mp4"
 ```

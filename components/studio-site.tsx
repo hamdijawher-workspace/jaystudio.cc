@@ -1,23 +1,30 @@
 "use client";
 
 import {
-  ArrowLeft,
   ArrowRight,
-  Crown,
-  Diamond,
+  Expand,
   Instagram,
   Mail,
   Menu,
+  MessageCircle,
   Play,
-  Sparkles,
   X,
   Youtube
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { films } from "@/lib/content";
+import { films, mediaPath } from "@/lib/content";
 import type { Film } from "@/lib/content";
 
-const heroImage = "/media/jay-studio-hero.png";
+const contactEmail =
+  "mailto:hamdijawher@icloud.com?subject=Project%20enquiry%20for%20JAY%20STUDIO";
+const contactWhatsApp =
+  "https://wa.me/21622085367?text=Hello%20JAY%20STUDIO%2C%20I%27d%20like%20to%20discuss%20a%20project.";
+const contactPhone = "tel:+21622085367";
+const instagramUrl =
+  "https://www.instagram.com/jaystudio.cc?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==";
+const tiktokUrl =
+  "https://www.tiktok.com/@jay.hamdii?is_from_webapp=1&sender_device=pc";
+const youtubeUrl = "https://www.youtube.com/";
 
 function Loader() {
   const [progress, setProgress] = useState(0);
@@ -25,105 +32,41 @@ function Loader() {
 
   useEffect(() => {
     const startedAt = performance.now();
-    const duration = 2200;
-    const update = () => {
-      const elapsed = performance.now() - startedAt;
-      const next = Math.min(100, Math.round((elapsed / duration) * 100));
+    const duration = 1800;
+    let frame = 0;
+    const update = (now: number) => {
+      const next = Math.min(100, Math.round(((now - startedAt) / duration) * 100));
       setProgress(next);
       if (next < 100) {
-        requestAnimationFrame(update);
+        frame = requestAnimationFrame(update);
       } else {
-        window.setTimeout(() => setVisible(false), 320);
+        window.setTimeout(() => setVisible(false), 280);
       }
     };
-    requestAnimationFrame(update);
+    frame = requestAnimationFrame(update);
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   if (!visible) return null;
 
   return (
-    <div className={`loader ${progress === 100 ? "loader--done" : ""}`}>
-      <div className="loader__wordmark">JAY STUDIO°</div>
-      <div className="loader__progress">
-        <span>{progress.toString().padStart(2, "0")}</span>
-        <div className="loader__track">
-          <div style={{ width: `${progress}%` }} />
+    <div className={`loader ${progress === 100 ? "is-complete" : ""}`}>
+      <div className="loader__logo" aria-label="JAY STUDIO">
+        <span className="loader__logo-outline">JAY STUDIO</span>
+        <span
+          className="loader__logo-fill"
+          style={{ clipPath: `inset(0 ${100 - progress}% 0 0)` }}
+        >
+          JAY STUDIO
+        </span>
+      </div>
+      <div className="loader__bottom">
+        <span>{String(progress).padStart(3, "0")}%</span>
+        <div>
+          <i style={{ width: `${progress}%` }} />
         </div>
-        <span>100</span>
       </div>
     </div>
-  );
-}
-
-function CustomCursor() {
-  const cursor = useRef<HTMLDivElement>(null);
-  const [label, setLabel] = useState("");
-
-  useEffect(() => {
-    const onMove = (event: MouseEvent) => {
-      if (!cursor.current) return;
-      cursor.current.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
-      const target = event.target as HTMLElement;
-      setLabel(target.closest<HTMLElement>("[data-cursor]")?.dataset.cursor ?? "");
-    };
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
-  }, []);
-
-  return (
-    <div ref={cursor} className={`custom-cursor ${label ? "is-active" : ""}`}>
-      {label === "play" ? <Play size={14} fill="currentColor" /> : label}
-    </div>
-  );
-}
-
-function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  return (
-    <header className="site-header">
-      <a href="#" className="wordmark" data-cursor="home">
-        JAY STUDIO<sup>°</sup>
-      </a>
-      <nav className={`header-nav ${menuOpen ? "is-open" : ""}`}>
-        <a href="#about" onClick={() => setMenuOpen(false)}>
-          About
-        </a>
-        <a href="#work" onClick={() => setMenuOpen(false)}>
-          Work
-        </a>
-        <a href="#contact" onClick={() => setMenuOpen(false)}>
-          Contact
-        </a>
-      </nav>
-      <div className="socials" aria-label="Social links">
-        <a href="#" aria-label="Instagram" data-cursor="open">
-          <Instagram />
-        </a>
-        <a href="#" aria-label="TikTok" data-cursor="open">
-          <TikTokIcon />
-        </a>
-        <a href="#" aria-label="YouTube" data-cursor="open">
-          <Youtube />
-        </a>
-      </div>
-      <button
-        className="menu-button"
-        aria-label="Toggle menu"
-        onClick={() => setMenuOpen(!menuOpen)}
-      >
-        {menuOpen ? <X /> : <Menu />}
-      </button>
-    </header>
-  );
-}
-
-function PlayButton({ label = "Play" }: { label?: string }) {
-  return (
-    <span className="play-button" aria-hidden="true">
-      <Play size={16} fill="currentColor" />
-      <span>{label}</span>
-    </span>
   );
 }
 
@@ -143,330 +86,456 @@ function TikTokIcon() {
   );
 }
 
-function Hero({ onPlay }: { onPlay: () => void }) {
-  return (
-    <section className="hero page-shell" id="about">
-      <img src={heroImage} alt="Cinematic luxury resort overlooking the sea" />
-      <div className="hero__shade" />
-      <div className="hero__content">
-        <p className="eyebrow">Creative production studio</p>
-        <h1>
-          Stories for brands.
-          <br />
-          <em>Made for people.</em>
-        </h1>
-        <p className="service-line">
-          Photography <span>•</span> Films <span>•</span> Campaigns{" "}
-          <span>•</span> Experiences
-        </p>
-        <button className="primary-button" onClick={onPlay} data-cursor="play">
-          View Showreel
-          <span className="button-icon">
-            <Play size={13} fill="currentColor" />
-          </span>
-        </button>
-      </div>
-      <div className="hero__stories">
-        <button onClick={onPlay} data-cursor="play">
-          <span>Featured work</span>
-          <strong>Aurea Resort</strong>
-          <PlayButton label="View project" />
-        </button>
-        <button onClick={onPlay} data-cursor="play">
-          <span>Camera approach</span>
-          <strong>Our Process</strong>
-          <PlayButton label="Watch video" />
-        </button>
-      </div>
-      <div className="hero__index">
-        <span>01</span>
-        <i />
-        <span>03</span>
-      </div>
-    </section>
-  );
-}
-
-function TiltCard({
-  film,
-  onPlay
-}: {
-  film: Film;
-  onPlay: (film: Film) => void;
-}) {
-  const cardRef = useRef<HTMLButtonElement>(null);
-
-  const tilt = (event: React.PointerEvent<HTMLButtonElement>) => {
-    if (event.pointerType === "touch") return;
-    const card = cardRef.current;
-    if (!card) return;
-    const bounds = card.getBoundingClientRect();
-    const rotateX = ((event.clientY - bounds.top) / bounds.height - 0.5) * -8;
-    const rotateY = ((event.clientX - bounds.left) / bounds.width - 0.5) * 8;
-    card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-  };
-
-  const reset = () => {
-    if (cardRef.current) cardRef.current.style.transform = "";
-  };
-
-  return (
-    <button
-      ref={cardRef}
-      className="film-card"
-      onClick={() => onPlay(film)}
-      onPointerMove={tilt}
-      onPointerLeave={reset}
-      data-cursor="play"
-      aria-label={`Play ${film.title}`}
-    >
-      <img src={film.image} alt="" />
-      <div className="film-card__overlay" />
-      <div className="film-card__identity">
-        <h3>{film.title}</h3>
-        <span>{film.category}</span>
-      </div>
-      <span className="film-card__play">
-        <Play fill="currentColor" />
-      </span>
-      <div className="film-card__copy">
-        <p>{film.subtitle}</p>
-      </div>
-    </button>
-  );
-}
-
-function RecentWork({ onPlay }: { onPlay: (film: Film) => void }) {
-  return (
-    <section className="section work-section page-shell" id="work">
-      <div className="section-heading">
-        <div>
-          <p className="eyebrow">Selected projects</p>
-          <h2>Recent Work</h2>
-        </div>
-        <p>
-          Films, photography and campaigns built for modern attention without
-          sacrificing craft, story or atmosphere.
-        </p>
-      </div>
-      <div className="film-grid">
-        {films.map((film) => (
-          <TiltCard film={film} onPlay={onPlay} key={film.title} />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function Weddings() {
-  return (
-    <section className="section page-shell">
-      <div className="weddings">
-        <img
-          src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85"
-          alt="Newly married couple"
-        />
-        <div className="weddings__shade" />
-        <div className="weddings__copy">
-          <p className="eyebrow">Weddings</p>
-          <h2>
-            Moments fade.
-            <br />
-            <em>Stories remain.</em>
-          </h2>
-          <p>Wedding films and photography crafted to last a lifetime.</p>
-          <a href="#contact" className="primary-button" data-cursor="open">
-            Explore Weddings <ArrowRight size={16} />
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const values = [
-  {
-    icon: Crown,
-    title: "Strategic Storytelling",
-    body: "Every frame starts with a clear idea, built around what your audience should feel and remember."
-  },
-  {
-    icon: Diamond,
-    title: "Premium Production",
-    body: "A senior creative team, refined direction and exacting production from first treatment to final grade."
-  },
-  {
-    icon: Sparkles,
-    title: "Results That Matter",
-    body: "Beautiful work is the baseline. We create assets designed to strengthen brands and move people."
-  }
-];
-
-function WhyJay() {
-  return (
-    <section className="values page-shell">
-      {values.map(({ icon: Icon, title, body }) => (
-        <article key={title}>
-          <Icon />
-          <div>
-            <h3>{title}</h3>
-            <p>{body}</p>
-          </div>
-        </article>
-      ))}
-    </section>
-  );
-}
-
-function Testimonial() {
-  return (
-    <section className="testimonial page-shell">
-      <div className="testimonial__mark">“</div>
-      <div>
-        <p className="testimonial__quote">
-          “Jay Studio captured the essence of our brand perfectly. The final
-          film exceeded all expectations and truly elevated our campaign.”
-        </p>
-        <div className="testimonial__person">
-          <span>LB</span>
-          <div>
-            <strong>Leila Ben Amor</strong>
-            <p>Marketing Director, Aurea Resort</p>
-          </div>
-        </div>
-      </div>
-      <div className="testimonial__controls">
-        <button aria-label="Previous testimonial">
-          <ArrowLeft />
-        </button>
-        <button aria-label="Next testimonial">
-          <ArrowRight />
-        </button>
-      </div>
-    </section>
-  );
-}
-
-function Contact() {
-  return (
-    <section className="contact page-shell" id="contact">
-      <p className="eyebrow">Start a project</p>
-      <h2>
-        Have a story worth
-        <br />
-        <em>making unforgettable?</em>
-      </h2>
-      <a
-        href="mailto:hello@jaystudio.com"
-        className="primary-button"
-        data-cursor="email"
-      >
-        hello@jaystudio.com <Mail size={16} />
-      </a>
-    </section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="footer page-shell">
-      <p>© 2026 Jay Studio. All rights reserved.</p>
-      <div>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms</a>
-      </div>
-      <div>
-        <a href="#">Instagram</a>
-        <a href="#">TikTok</a>
-        <a href="#">YouTube</a>
-      </div>
-    </footer>
-  );
-}
-
-function VideoModal({
-  film,
+function StudioMenu({
+  open,
   onClose
 }: {
-  film: Film | null;
+  open: boolean;
   onClose: () => void;
 }) {
   useEffect(() => {
-    document.body.style.overflow = film ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [film]);
-
-  useEffect(() => {
-    const close = (event: KeyboardEvent) => {
+    if (!open) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
     };
-    window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
-  }, [onClose]);
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [open, onClose]);
+
+  return (
+    <aside className={`studio-menu ${open ? "is-open" : ""}`} aria-hidden={!open}>
+      <div className="studio-menu__top">
+        <span>JAY STUDIO / MENU</span>
+        <button type="button" onClick={onClose} aria-label="Close menu">
+          <X />
+        </button>
+      </div>
+      <nav>
+        <a href="./works/" onClick={onClose}>
+          <span>01</span>
+          <strong>All Works</strong>
+          <ArrowRight />
+        </a>
+        <a href={contactEmail} onClick={onClose}>
+          <span>02</span>
+          <strong>Email Studio</strong>
+          <ArrowRight />
+        </a>
+      </nav>
+      <div className="studio-menu__footer">
+        <p>Films, photography and social-first campaigns.</p>
+      </div>
+    </aside>
+  );
+}
+
+function BackgroundPreview({
+  film
+}: {
+  film: Film;
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.currentTime = 0;
+    void video.play().catch(() => undefined);
+  }, [film]);
+
+  return (
+    <video
+      ref={videoRef}
+      className="showcase-project__cover-video"
+      src={mediaPath(film.previewVideo)}
+      poster={mediaPath(film.image)}
+      muted
+      loop
+      playsInline
+      preload="auto"
+    />
+  );
+}
+
+function ProjectIndicators({
+  activeIndex,
+  onSelect
+}: {
+  activeIndex: number;
+  onSelect: (index: number) => void;
+}) {
+  return (
+    <div className="project-indicators" aria-label="Select project">
+      {films.map((film, index) => (
+        <button
+          type="button"
+          className={activeIndex === index ? "is-active" : ""}
+          onClick={() => onSelect(index)}
+          aria-label={`View ${film.title}`}
+          aria-current={activeIndex === index ? "true" : undefined}
+          key={film.title}
+        >
+          <span />
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function VideoPlayer({
+  film,
+  index,
+  onClose,
+  onChange
+}: {
+  film: Film | null;
+  index: number;
+  onClose: () => void;
+  onChange: (index: number) => void;
+}) {
+  const touchStart = useRef<number | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [muted, setMuted] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [playing, setPlaying] = useState(true);
+
+  useEffect(() => {
+    if (!film) return;
+    setMuted(false);
+    setCurrentTime(0);
+    setDuration(0);
+    setPlaying(true);
+    document.body.style.overflow = "hidden";
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+      if (event.key === "ArrowLeft") {
+        onChange((index - 1 + films.length) % films.length);
+      }
+      if (event.key === "ArrowRight") {
+        onChange((index + 1) % films.length);
+      }
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [film, index, onChange, onClose]);
 
   if (!film) return null;
 
+  const changeBy = (direction: number) => {
+    onChange((index + direction + films.length) % films.length);
+  };
+
+  const formatTime = (seconds: number) => {
+    if (!Number.isFinite(seconds)) return "00:00";
+    const minutes = Math.floor(seconds / 60);
+    const remaining = Math.floor(seconds % 60);
+    return `${String(minutes).padStart(2, "0")}:${String(remaining).padStart(2, "0")}`;
+  };
+
+  const togglePlayback = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      void video.play();
+    } else {
+      video.pause();
+    }
+  };
+
   return (
-    <div className="video-modal" role="dialog" aria-modal="true">
-      <button
-        className="video-modal__backdrop"
-        onClick={onClose}
-        aria-label="Close video"
-      />
-      <div
-        className={`video-modal__panel video-modal__panel--${film.orientation}`}
-      >
-        <div className="video-modal__header">
-          <div>
-            <span>{film.category}</span>
-            <strong>{film.title}</strong>
-          </div>
-          <button onClick={onClose} aria-label="Close video">
+    <div
+      className="project-player"
+      role="dialog"
+      aria-modal="true"
+      onTouchStart={(event) => {
+        touchStart.current = event.touches[0]?.clientX ?? null;
+      }}
+      onTouchEnd={(event) => {
+        if (touchStart.current === null) return;
+        const end = event.changedTouches[0]?.clientX ?? touchStart.current;
+        const distance = end - touchStart.current;
+        if (Math.abs(distance) > 60) changeBy(distance > 0 ? -1 : 1);
+        touchStart.current = null;
+      }}
+    >
+      <div className={`project-player__media is-${film.orientation}`}>
+        <div className="project-player__top">
+          <button
+            className="project-player__sound"
+            type="button"
+            onClick={() => {
+              const next = !muted;
+              setMuted(next);
+              if (videoRef.current) videoRef.current.muted = next;
+            }}
+          >
+            {muted ? "Sound Off" : "Sound On"}
+          </button>
+          <button
+            className="project-player__close"
+            type="button"
+            onClick={onClose}
+            aria-label="Close video"
+          >
             <X />
           </button>
         </div>
-        <div className="video-modal__device">
-          <span
-            className={`device-notch device-notch--${film.orientation}`}
-          />
-          <video
-            src={film.video}
-            poster={film.image}
-            controls
-            autoPlay
-            playsInline
-          />
+        <video
+          ref={videoRef}
+          key={film.title}
+          src={mediaPath(film.playbackVideo)}
+          poster={mediaPath(film.image)}
+          autoPlay
+          muted={muted}
+          playsInline
+          preload="auto"
+          onClick={togglePlayback}
+          onLoadedMetadata={(event) => {
+            setDuration(event.currentTarget.duration);
+            event.currentTarget.muted = muted;
+          }}
+          onTimeUpdate={(event) => setCurrentTime(event.currentTarget.currentTime)}
+          onPlay={() => setPlaying(true)}
+          onPause={() => setPlaying(false)}
+        />
+        {!playing && (
+          <button
+            className="project-player__play"
+            type="button"
+            onClick={togglePlayback}
+            aria-label="Resume video"
+          >
+            <Play fill="currentColor" />
+          </button>
+        )}
+        <div className="project-player__controls">
+          <strong>{film.title}</strong>
+          <div>
+            <span>{formatTime(currentTime)}</span>
+            <button
+              type="button"
+              className="project-player__timeline"
+              onClick={(event) => {
+                const video = videoRef.current;
+                if (!video || !duration) return;
+                const bounds = event.currentTarget.getBoundingClientRect();
+                video.currentTime =
+                  ((event.clientX - bounds.left) / bounds.width) * duration;
+              }}
+              aria-label="Seek video"
+            >
+              <i />
+              <b
+                style={{
+                  width: `${duration ? (currentTime / duration) * 100 : 0}%`
+                }}
+              />
+            </button>
+            <button
+              type="button"
+              onClick={() => void videoRef.current?.requestFullscreen()}
+              aria-label="Enter fullscreen"
+            >
+              <Expand />
+            </button>
+          </div>
         </div>
+      </div>
+      <ProjectIndicators activeIndex={index} onSelect={onChange} />
+    </div>
+  );
+}
+
+function ContactSheet({
+  open,
+  onClose
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
+  if (!open) return null;
+
+  return (
+    <div className="contact-sheet" role="dialog" aria-modal="true">
+      <button
+        className="contact-sheet__backdrop"
+        type="button"
+        onClick={onClose}
+        aria-label="Close contact options"
+      />
+      <div className="contact-sheet__panel">
+        <button type="button" onClick={onClose} aria-label="Close contact options">
+          <X />
+        </button>
+        <span>START A PROJECT</span>
+        <h2>Tell us what you want people to feel.</h2>
+        <a href={contactPhone}>
+          <MessageCircle />
+          <strong>Call the studio</strong>
+          <ArrowRight />
+        </a>
+        <a href={contactEmail}>
+          <Mail />
+          <strong>Email the studio</strong>
+          <ArrowRight />
+        </a>
+        <a href={contactWhatsApp} target="_blank" rel="noreferrer">
+          <MessageCircle />
+          <strong>WhatsApp</strong>
+          <ArrowRight />
+        </a>
       </div>
     </div>
   );
 }
 
 export function StudioSite() {
-  const [selectedFilm, setSelectedFilm] = useState<Film | null>(null);
-  const showreel = films[0];
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [playingIndex, setPlayingIndex] = useState<number | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
+  const mobileTrack = useRef<HTMLDivElement>(null);
+  const scrollTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const selectProject = (index: number) => {
+    setActiveIndex(index);
+    const track = mobileTrack.current;
+    if (track && window.matchMedia("(max-width: 767px)").matches) {
+      track.scrollTo({ left: track.clientWidth * index, behavior: "smooth" });
+    }
+  };
+
+  const openContact = () => {
+    setMenuOpen(false);
+    setContactOpen(true);
+  };
 
   return (
     <>
       <Loader />
-      <CustomCursor />
-      <Header />
-      <main>
-        <Hero onPlay={() => setSelectedFilm(showreel)} />
-        <RecentWork onPlay={setSelectedFilm} />
-        <Weddings />
-        <WhyJay />
-        <Testimonial />
-        <Contact />
+      <main className="showcase">
+      <header className="showcase-header">
+        <a href="./" className="showcase-wordmark">
+          JAY STUDIO
+        </a>
+        <p>Creative production</p>
+        <div className="showcase-header__actions">
+          <div className="showcase-socials">
+            <a href={instagramUrl} target="_blank" rel="noreferrer" aria-label="Instagram"><Instagram /></a>
+            <a href={tiktokUrl} target="_blank" rel="noreferrer" aria-label="TikTok"><TikTokIcon /></a>
+            <a href={youtubeUrl} target="_blank" rel="noreferrer" aria-label="YouTube"><Youtube /></a>
+          </div>
+          <button
+            type="button"
+            onClick={() => setMenuOpen(true)}
+            aria-label="Open menu"
+          >
+            <Menu />
+          </button>
+        </div>
+      </header>
+
+      <div
+        className="showcase-track"
+        ref={mobileTrack}
+        onScroll={(event) => {
+          if (window.innerWidth > 767) return;
+          if (scrollTimer.current) clearTimeout(scrollTimer.current);
+          const target = event.currentTarget;
+          scrollTimer.current = setTimeout(() => {
+            const next = Math.round(target.scrollLeft / target.clientWidth);
+            setActiveIndex(Math.max(0, Math.min(films.length - 1, next)));
+          }, 60);
+        }}
+      >
+        {films.map((film, index) => (
+          <article
+            className={`showcase-project ${
+              activeIndex === index ? "is-active" : ""
+            }`}
+            key={film.title}
+            onClick={() => setActiveIndex(index)}
+          >
+            {activeIndex === index && playingIndex === null ? (
+              <BackgroundPreview film={film} />
+            ) : (
+              <img src={mediaPath(film.image)} alt="" />
+            )}
+            <div className="showcase-project__shade" />
+            <div className="showcase-project__meta">
+              <span>{film.category}</span>
+              <h1>{film.title}</h1>
+              <p>{film.subtitle}</p>
+            </div>
+            <button
+              className="showcase-project__play"
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                if (activeIndex === index || window.innerWidth <= 767) {
+                  setPlayingIndex(index);
+                } else {
+                  setActiveIndex(index);
+                }
+              }}
+              aria-label={`Play ${film.title}`}
+            >
+              <Play fill="currentColor" />
+              <span>Play project</span>
+            </button>
+            <span className="showcase-project__number">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+          </article>
+        ))}
+      </div>
+
+      <div className="showcase-bottom">
+        <ProjectIndicators
+          activeIndex={activeIndex}
+          onSelect={selectProject}
+        />
+        <span>
+          {String(activeIndex + 1).padStart(2, "0")} /{" "}
+          {String(films.length).padStart(2, "0")}
+        </span>
+      </div>
+
+      <button
+        className="floating-contact floating-contact--desktop"
+        type="button"
+        onClick={openContact}
+      >
+        Contact Us
+      </button>
+      <button
+        className="floating-contact floating-contact--mobile"
+        type="button"
+        onClick={openContact}
+      >
+        Contact Us
+      </button>
+
+      <StudioMenu
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+      />
+      <ContactSheet open={contactOpen} onClose={() => setContactOpen(false)} />
+      <VideoPlayer
+        film={playingIndex === null ? null : films[playingIndex]}
+        index={playingIndex ?? 0}
+        onClose={() => setPlayingIndex(null)}
+        onChange={(index) => {
+          setPlayingIndex(index);
+          setActiveIndex(index);
+        }}
+      />
       </main>
-      <Footer />
-      <a className="floating-cta" href="#contact" data-cursor="email">
-        <Mail />
-        <span>Let&apos;s Create</span>
-      </a>
-      <VideoModal film={selectedFilm} onClose={() => setSelectedFilm(null)} />
     </>
   );
 }

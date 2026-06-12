@@ -3,66 +3,55 @@ export type Film = {
   category: string;
   subtitle: string;
   image: string;
-  video: string;
+  previewVideo: string;
+  playbackVideo: string;
   orientation: "portrait" | "landscape";
+  year: string;
 };
-
-const demoVideo =
-  "https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4";
 
 export const films: Film[] = [
   {
-    title: "AUREA",
-    category: "FILM",
-    subtitle: "Luxury Event Campaign",
-    image:
-      "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=900&q=85",
-    video: demoVideo,
-    orientation: "landscape"
-  },
-  {
     title: "DELISHIO",
-    category: "CAMPAIGN",
-    subtitle: "Brand Visuals",
-    image:
-      "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=900&q=85",
-    video: demoVideo,
-    orientation: "portrait"
+    category: "SOCIAL MEDIA CONTENT",
+    subtitle: "Cold drink reel / social-first lifestyle content",
+    image: "/projects/delishio-cover.jpg",
+    previewVideo: "/projects/delishio-preview.mp4",
+    playbackVideo: "/projects/delishio-web.mp4",
+    orientation: "portrait",
+    year: "2026"
   },
   {
-    title: "MPRV",
-    category: "BRAND",
-    subtitle: "Identity Film",
-    image:
-      "https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=900&q=85",
-    video: demoVideo,
-    orientation: "portrait"
+    title: "AUREA / TEASER",
+    category: "EVENT AGENCY TEASER",
+    subtitle: "A first glimpse built around colour, character and anticipation",
+    image: "/projects/aurea-teaser-cover.jpg",
+    previewVideo: "/projects/aurea-teaser-preview.mp4",
+    playbackVideo: "/projects/aurea-teaser-web.mp4",
+    orientation: "portrait",
+    year: "2026"
+  },
+  {
+    title: "BEYOND ORDINARY",
+    category: "AUREA REVEAL",
+    subtitle: "From the newspaper tease to the final poolside reveal",
+    image: "/projects/aurea-reveal-cover.jpg",
+    previewVideo: "/projects/aurea-reveal-preview.mp4",
+    playbackVideo: "/projects/aurea-reveal-web.mp4",
+    orientation: "portrait",
+    year: "2026"
   },
   {
     title: "SIDI BOU SAID",
-    category: "FILM",
-    subtitle: "Destination Film",
-    image:
-      "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=900&q=85",
-    video: demoVideo,
-    orientation: "landscape"
-  },
-  {
-    title: "MAISON",
-    category: "BRAND",
-    subtitle: "Interior Campaign",
-    image:
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=85",
-    video: demoVideo,
-    orientation: "portrait"
-  },
-  {
-    title: "ÉCLAT",
-    category: "WEDDING",
-    subtitle: "A Film About Two",
-    image:
-      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=85",
-    video: demoVideo,
-    orientation: "portrait"
+    category: "INFLUENCER DESTINATION FILM",
+    subtitle: "Bechir discovers the story behind Tunisia’s blue and white icon",
+    image: "/projects/sidi-bou-said-cover.jpg",
+    previewVideo: "/projects/sidi-bou-said.mp4",
+    playbackVideo: "/projects/sidi-bou-said.mp4",
+    orientation: "portrait",
+    year: "2026"
   }
 ];
+
+export function mediaPath(path: string, fromWorks = false) {
+  return `${fromWorks ? ".." : "."}${path}`;
+}
