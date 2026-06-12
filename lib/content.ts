@@ -15,7 +15,7 @@ export const films: Film[] = [
     category: "SOCIAL MEDIA CONTENT",
     subtitle: "Cold drink reel / social-first lifestyle content",
     image: "/projects/delishio-cover.jpg",
-    previewVideo: "/projects/delishio-preview.mp4",
+    previewVideo: "/projects/delishio-web.mp4",
     playbackVideo: "/projects/delishio-web.mp4",
     orientation: "portrait",
     year: "2026"
@@ -25,7 +25,7 @@ export const films: Film[] = [
     category: "EVENT AGENCY TEASER",
     subtitle: "A first glimpse built around colour, character and anticipation",
     image: "/projects/aurea-teaser-cover.jpg",
-    previewVideo: "/projects/aurea-teaser-preview.mp4",
+    previewVideo: "/projects/aurea-teaser-web.mp4",
     playbackVideo: "/projects/aurea-teaser-web.mp4",
     orientation: "portrait",
     year: "2026"
@@ -35,7 +35,7 @@ export const films: Film[] = [
     category: "AUREA REVEAL",
     subtitle: "From the newspaper tease to the final poolside reveal",
     image: "/projects/aurea-reveal-cover.jpg",
-    previewVideo: "/projects/aurea-reveal-preview.mp4",
+    previewVideo: "/projects/aurea-reveal-web.mp4",
     playbackVideo: "/projects/aurea-reveal-web.mp4",
     orientation: "portrait",
     year: "2026"
