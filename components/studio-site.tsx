@@ -2,7 +2,6 @@
 
 import {
   ArrowRight,
-  Expand,
   Instagram,
   Mail,
   Menu,
@@ -263,6 +262,12 @@ function VideoPlayer({
         touchStart.current = null;
       }}
     >
+      <button
+        className="project-player__backdrop"
+        type="button"
+        onClick={onClose}
+        aria-label="Close video"
+      />
       <div className={`project-player__media is-${film.orientation}`}>
         <div className="project-player__top">
           <button
@@ -335,13 +340,6 @@ function VideoPlayer({
                   width: `${duration ? (currentTime / duration) * 100 : 0}%`
                 }}
               />
-            </button>
-            <button
-              type="button"
-              onClick={() => void videoRef.current?.requestFullscreen()}
-              aria-label="Enter fullscreen"
-            >
-              <Expand />
             </button>
           </div>
         </div>

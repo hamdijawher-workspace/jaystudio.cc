@@ -545,6 +545,17 @@ svg {
   background: #000;
 }
 
+.archive-player__backdrop,
+.project-player__backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+}
+
+.archive-player__backdrop {
+  z-index: 1;
+}
+
 .archive-player__header {
   position: absolute;
   z-index: 3;
@@ -581,6 +592,11 @@ svg {
   stroke-width: 1.4;
 }
 
+.archive-player > video {
+  position: relative;
+  z-index: 2;
+}
+
 .project-player {
   position: fixed;
   z-index: 100;
@@ -592,6 +608,10 @@ svg {
   color: #fff;
   background: rgba(0, 0, 0, 0.68);
   backdrop-filter: blur(15px) saturate(0.72);
+}
+
+.project-player__backdrop {
+  z-index: 0;
 }
 
 .project-player__top {
@@ -622,6 +642,7 @@ svg {
 
 .project-player__media {
   position: relative;
+  z-index: 1;
   width: min(88vw, 1380px);
   max-height: 94svh;
   aspect-ratio: 16 / 9;
@@ -691,7 +712,7 @@ svg {
 
 .project-player__controls > div {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto minmax(0, 1fr);
   gap: 12px;
   align-items: center;
 }
@@ -725,12 +746,6 @@ svg {
 
 .project-player__timeline b {
   background: #fff;
-}
-
-.project-player__controls > div > button:last-child svg {
-  width: 19px;
-  height: 19px;
-  stroke-width: 1.7;
 }
 
 .contact-sheet {
@@ -1085,13 +1100,15 @@ svg {
 
   .floating-contact--mobile {
     display: block;
-    right: 20px;
+    right: auto;
     bottom: 44px;
+    left: 50%;
     min-width: 82px;
     padding: 12px 15px;
     border-color: #fff;
     color: #090909;
     background: #fff;
+    transform: translateX(-50%);
   }
 
   .floating-contact--mobile::before {
@@ -1364,10 +1381,6 @@ svg {
   min-width: 0;
 }
 
-.work-card--wide {
-  grid-column: span 8;
-}
-
 .work-card > button {
   position: relative;
   display: block;
@@ -1376,14 +1389,6 @@ svg {
   border-radius: 12px;
   aspect-ratio: 4 / 5;
   background: #171717;
-}
-
-.work-card--wide > button {
-  aspect-ratio: 16 / 9;
-}
-
-.work-card--tall > button {
-  aspect-ratio: 3 / 4;
 }
 
 .work-card > button:disabled {
@@ -1398,6 +1403,16 @@ svg {
   transition:
     filter 420ms ease,
     transform 650ms cubic-bezier(0.2, 0.72, 0.2, 1);
+}
+
+.work-card--album > button,
+.work-card--photo > button {
+  background: #0d0d0d;
+}
+
+.work-card--album > button > img,
+.work-card--photo > button > img {
+  object-fit: contain;
 }
 
 .work-card__shade {
@@ -1739,12 +1754,9 @@ svg {
   }
 
   .work-card,
-  .work-card--wide {
+  .work-card--album,
+  .work-card--photo {
     grid-column: span 1;
-  }
-
-  .work-card--wide:first-child {
-    grid-column: span 2;
   }
 }
 
@@ -1779,14 +1791,9 @@ svg {
     margin-top: 24px;
   }
 
-  .work-card > button,
-  .work-card--tall > button {
+  .work-card > button {
     border-radius: 9px;
-    aspect-ratio: 3 / 4;
-  }
-
-  .work-card--wide:first-child > button {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 4 / 5;
   }
 
   .work-card__overlay {

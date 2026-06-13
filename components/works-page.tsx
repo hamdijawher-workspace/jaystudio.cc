@@ -10,6 +10,7 @@ type WorkFilter =
   | "Video"
   | "Photography"
   | "Brands"
+  | "Influencer"
   | "Long Format"
   | "Short Format";
 
@@ -22,7 +23,6 @@ type ArchiveWork = {
   kind: "video" | "album" | "photo";
   film?: Film;
   photoIndex?: number;
-  size?: "wide" | "tall" | "standard";
 };
 
 const filters: WorkFilter[] = [
@@ -30,6 +30,7 @@ const filters: WorkFilter[] = [
   "Video",
   "Photography",
   "Brands",
+  "Influencer",
   "Long Format",
   "Short Format"
 ];
@@ -48,8 +49,7 @@ const archiveWorks: ArchiveWork[] = [
     image: films[2].image,
     film: films[2],
     filters: ["All", "Video", "Brands", "Short Format"],
-    kind: "video",
-    size: "wide"
+    kind: "video"
   },
   {
     id: "delishio-reel",
@@ -58,8 +58,7 @@ const archiveWorks: ArchiveWork[] = [
     image: films[0].image,
     film: films[0],
     filters: ["All", "Video", "Brands", "Short Format"],
-    kind: "video",
-    size: "tall"
+    kind: "video"
   },
   {
     id: "sidi-film",
@@ -67,9 +66,8 @@ const archiveWorks: ArchiveWork[] = [
     descriptor: "Influencer destination story",
     image: films[3].image,
     film: films[3],
-    filters: ["All", "Video", "Long Format"],
-    kind: "video",
-    size: "tall"
+    filters: ["All", "Video", "Influencer", "Long Format"],
+    kind: "video"
   },
   {
     id: "aurea-teaser",
@@ -86,8 +84,7 @@ const archiveWorks: ArchiveWork[] = [
     descriptor: "Event photography / 9 photographs",
     image: aureaPhotos[0].src,
     filters: ["All", "Brands"],
-    kind: "album",
-    size: "wide"
+    kind: "album"
   }
 ];
 
@@ -98,8 +95,7 @@ const photographyWorks: ArchiveWork[] = aureaPhotos.map((photo, index) => ({
   image: photo.src,
   filters: ["Photography"],
   kind: "photo",
-  photoIndex: index,
-  size: index === 0 || index === 5 ? "wide" : index % 3 === 0 ? "tall" : "standard"
+  photoIndex: index
 }));
 
 function ArchivePlayer({
@@ -122,6 +118,12 @@ function ArchivePlayer({
 
   return (
     <div className="archive-player" role="dialog" aria-modal="true">
+      <button
+        className="archive-player__backdrop"
+        type="button"
+        onClick={onClose}
+        aria-label="Close video"
+      />
       <div className="archive-player__header">
         <div>
           <strong>{film.title}</strong>
@@ -302,7 +304,7 @@ export function WorksPage() {
       <section className="works-grid" aria-live="polite">
         {visibleWorks.map((work, index) => (
           <article
-            className={`work-card work-card--${work.size ?? "standard"}`}
+            className={`work-card work-card--${work.kind}`}
             key={work.id}
           >
             <button
