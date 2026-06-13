@@ -769,10 +769,12 @@ svg {
 .contact-sheet__panel {
   position: relative;
   z-index: 2;
-  width: min(580px, 100%);
-  padding: clamp(30px, 5vw, 62px);
+  width: min(500px, 100%);
+  padding: clamp(28px, 4vw, 48px);
+  border-radius: 18px;
   color: #111;
   background: #f3f2ed;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
 }
 
 .contact-sheet__panel > button {
@@ -795,8 +797,8 @@ svg {
 }
 
 .contact-sheet__panel h2 {
-  margin: 0 0 38px;
-  font-size: clamp(38px, 6vw, 66px);
+  margin: 0 0 30px;
+  font-size: clamp(36px, 4.5vw, 54px);
   line-height: 0.94;
   letter-spacing: -0.055em;
 }
@@ -806,7 +808,7 @@ svg {
   grid-template-columns: auto 1fr auto;
   gap: 16px;
   align-items: center;
-  padding: 20px 0;
+  padding: 17px 0;
   border-top: 1px solid rgba(0, 0, 0, 0.18);
 }
 
@@ -827,6 +829,22 @@ svg {
   min-height: 100vh;
   overflow-x: hidden;
   background: #efeee9;
+  color: #111;
+}
+
+.works-contact {
+  right: clamp(20px, 3.4vw, 54px);
+  bottom: 28px;
+  border-color: #111;
+  color: #fff;
+  background: #111;
+}
+
+.works-contact::before {
+  background: #f3f2ed;
+}
+
+.works-contact:hover {
   color: #111;
 }
 
@@ -1610,8 +1628,9 @@ svg {
   position: relative;
   z-index: 1;
   display: grid;
-  width: min(1180px, 100%);
-  height: min(88svh, 920px);
+  width: min(620px, calc(88svh * 0.75), calc(100vw - 32px));
+  max-height: 88svh;
+  aspect-ratio: 3 / 4;
   place-items: center;
   overflow: hidden;
   border-radius: 14px;
@@ -1846,8 +1865,9 @@ svg {
   }
 
   .photo-lightbox__stage {
-    width: 100%;
-    height: 100svh;
+    width: min(100%, calc(100svh * 0.75));
+    max-height: 100svh;
+    aspect-ratio: 3 / 4;
     border-radius: 0;
   }
 
@@ -1902,5 +1922,12 @@ svg {
   .contact-sheet__panel {
     border-radius: 18px 18px 0 0;
     animation: contact-sheet-up 320ms cubic-bezier(0.22, 0.72, 0.2, 1);
+  }
+
+  .works-contact {
+    right: auto;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }

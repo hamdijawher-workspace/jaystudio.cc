@@ -2,6 +2,7 @@
 
 import { ArrowLeft, ArrowRight, Images, Menu, Play, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { ContactSheet } from "@/components/contact-sheet";
 import { films, mediaPath } from "@/lib/content";
 import type { Film } from "@/lib/content";
 
@@ -35,7 +36,7 @@ const filters: WorkFilter[] = [
   "Short Format"
 ];
 
-const aureaPhotoNumbers = [1, 2, 3, 4, 5, 6, 7, 9, 10];
+const aureaPhotoNumbers = [1, 2, 3, 4, 5, 7, 9];
 const aureaPhotos = aureaPhotoNumbers.map((photoNumber, index) => ({
   src: `/projects/aurea-event/aurea-event-${String(photoNumber).padStart(2, "0")}.jpg`,
   alt: `Aurea Beyond Ordinary event photograph ${index + 1}`
@@ -81,7 +82,7 @@ const archiveWorks: ArchiveWork[] = [
   {
     id: "aurea-event-album",
     title: "AUREA / BEYOND ORDINARY",
-    descriptor: "Event photography / 9 photographs",
+    descriptor: `${aureaPhotos.length} unique event photographs`,
     image: aureaPhotos[0].src,
     filters: ["All", "Brands"],
     kind: "album"
@@ -239,6 +240,7 @@ export function WorksPage() {
   const [selectedFilm, setSelectedFilm] = useState<Film | null>(null);
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState<WorkFilter>("All");
 
   const visibleWorks =
@@ -383,12 +385,21 @@ export function WorksPage() {
         <p>© 2026 JAY STUDIO</p>
       </footer>
 
+      <button
+        className="floating-contact works-contact"
+        type="button"
+        onClick={() => setContactOpen(true)}
+      >
+        Contact Us
+      </button>
+
       <ArchivePlayer film={selectedFilm} onClose={() => setSelectedFilm(null)} />
       <PhotoLightbox
         index={selectedPhoto}
         onChange={setSelectedPhoto}
         onClose={() => setSelectedPhoto(null)}
       />
+      <ContactSheet open={contactOpen} onClose={() => setContactOpen(false)} />
     </main>
   );
 }
