@@ -397,7 +397,7 @@ export function StudioSite() {
   const [contactOpen, setContactOpen] = useState(false);
   const mobileTrack = useRef<HTMLDivElement>(null);
   const scrollTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const advanceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const advanceTimeout = useRef<number | null>(null);
 
   useEffect(() => {
     return () => {
