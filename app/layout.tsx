@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "JAY STUDIO | Cinematic Campaigns",
+  title: "JAY STUDIO | Creative Direction & Production",
   description:
-    "Cinematic visual campaigns for hospitality, real estate, restaurants, lifestyle brands and premium experiences."
+    "Jay Studio creates and produces visual campaigns through creative direction, film, photography and digital."
 };
 
 export default function RootLayout({

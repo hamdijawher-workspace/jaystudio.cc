@@ -8,12 +8,10 @@ import type { Film } from "@/lib/content";
 
 type WorkFilter =
   | "All"
-  | "Video"
+  | "Film"
   | "Photography"
-  | "Brands"
-  | "Influencer"
-  | "Long Format"
-  | "Short Format";
+  | "Campaigns"
+  | "Digital";
 
 type ArchiveWork = {
   id: string;
@@ -28,10 +26,10 @@ type ArchiveWork = {
 
 const filters: WorkFilter[] = [
   "All",
-  "Video",
+  "Campaigns",
+  "Film",
   "Photography",
-  "Brands",
-  "Long Format"
+  "Digital"
 ];
 
 const aureaPhotoNumbers = [1, 2, 3, 4, 5, 7, 9];
@@ -47,7 +45,7 @@ const archiveWorks: ArchiveWork[] = [
     descriptor: "Aurea reveal / short-form hospitality film",
     image: films[2].image,
     film: films[2],
-    filters: ["All", "Video", "Brands", "Short Format"],
+    filters: ["All", "Film", "Campaigns"],
     kind: "video"
   },
   {
@@ -56,7 +54,7 @@ const archiveWorks: ArchiveWork[] = [
     descriptor: "Cold drink / social media content",
     image: films[0].image,
     film: films[0],
-    filters: ["All", "Video", "Brands", "Short Format"],
+    filters: ["All", "Film", "Campaigns"],
     kind: "video"
   },
   {
@@ -65,7 +63,7 @@ const archiveWorks: ArchiveWork[] = [
     descriptor: "Influencer destination story",
     image: films[3].image,
     film: films[3],
-    filters: ["All", "Video", "Influencer", "Long Format"],
+    filters: ["All", "Film", "Campaigns"],
     kind: "video"
   },
   {
@@ -74,7 +72,7 @@ const archiveWorks: ArchiveWork[] = [
     descriptor: "Event agency teaser / social-first film",
     image: films[1].image,
     film: films[1],
-    filters: ["All", "Video", "Brands", "Short Format"],
+    filters: ["All", "Film", "Campaigns"],
     kind: "video"
   },
   {
@@ -82,7 +80,7 @@ const archiveWorks: ArchiveWork[] = [
     title: "AUREA / BEYOND ORDINARY",
     descriptor: `${aureaPhotos.length} unique event photographs`,
     image: aureaPhotos[0].src,
-    filters: ["All", "Brands"],
+    filters: ["All", "Photography", "Campaigns"],
     kind: "album"
   }
 ];
@@ -241,10 +239,16 @@ export function WorksPage() {
   const [contactOpen, setContactOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState<WorkFilter>("All");
 
-  const visibleWorks =
-    activeFilter === "Photography"
-      ? photographyWorks
-      : archiveWorks.filter((work) => work.filters.includes(activeFilter));
+  useEffect(() => {
+    const requestedFilter = new URLSearchParams(window.location.search).get("filter");
+    if (requestedFilter && filters.includes(requestedFilter as WorkFilter)) {
+      setActiveFilter(requestedFilter as WorkFilter);
+    }
+  }, []);
+
+  const visibleWorks = activeFilter === "Photography"
+    ? photographyWorks
+    : archiveWorks.filter((work) => work.filters.includes(activeFilter));
 
   const openWork = (work: ArchiveWork) => {
     if (work.kind === "video" && work.film) setSelectedFilm(work.film);
@@ -262,7 +266,7 @@ export function WorksPage() {
         </a>
         <div className="showcase-brand works-header__brand">
           <a href="../" className="showcase-wordmark">JAY STUDIO</a>
-          <p>Production studio</p>
+          <p>Creative direction &amp; production</p>
         </div>
         <button
           type="button"
@@ -280,12 +284,12 @@ export function WorksPage() {
 
       <section className="works-intro">
         <p>Selected work</p>
-        <h1>A visual archive built for movement, detail and atmosphere.</h1>
+        <h1>Ideas, directed.<br />Stories, produced.</h1>
         <div className="works-intro__meta">
-          <span>Films</span>
-          <span>Social content</span>
+          <span>Campaigns</span>
+          <span>Film</span>
           <span>Photography</span>
-          <span>Brand work</span>
+          <span>Digital</span>
         </div>
       </section>
 
@@ -367,7 +371,7 @@ export function WorksPage() {
               </div>
               <span>
                 {work.kind === "video"
-                  ? "Motion"
+                  ? "Film"
                   : work.kind === "album"
                     ? "Album"
                     : "Photography"}

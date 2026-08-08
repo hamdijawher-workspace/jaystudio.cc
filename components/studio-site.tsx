@@ -62,6 +62,29 @@ function Loader() {
   );
 }
 
+function HomeFooterOverlay() {
+  const [visible, setVisible] = useState(false);
+  const previousY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      setVisible(currentY > 20);
+      previousY.current = currentY;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <footer className={`home-footer-overlay ${visible ? "is-visible" : ""}`}>
+      <div><span>JAY STUDIO</span><p>Ideas, directed.<br />Stories, produced.</p></div>
+      <nav><a href="/case-studies">Selected Work</a><a href="/studio">About Jay Studio</a><a href="/contact">Contact</a></nav>
+      <small>© 2026 JAY STUDIO / TUNIS</small>
+    </footer>
+  );
+}
+
 function TikTokIcon() {
   return (
     <svg
@@ -121,24 +144,20 @@ function StudioMenu({
         </button>
       </div>
       <nav>
-        <a href="./works/" onClick={onClose}>
-          <strong>All</strong>
+        <a href="/case-studies" onClick={onClose}>
+          <strong>Case Studies</strong>
           <ArrowRight />
         </a>
-        <a href="./works/?filter=Video" onClick={onClose}>
-          <strong>Video</strong>
+        <a href="/case-studies/aurea-beyond-ordinary" onClick={onClose}>
+          <strong>AUREA / Beyond Ordinary</strong>
           <ArrowRight />
         </a>
-        <a href="./works/?filter=Photography" onClick={onClose}>
-          <strong>Photography</strong>
+        <a href="/studio" onClick={onClose}>
+          <strong>Studio / About</strong>
           <ArrowRight />
         </a>
-        <a href="./works/?filter=Brands" onClick={onClose}>
-          <strong>Brands</strong>
-          <ArrowRight />
-        </a>
-        <a href="./works/?filter=Long%20Format" onClick={onClose}>
-          <strong>Long Format</strong>
+        <a href="/contact" onClick={onClose}>
+          <strong>Contact</strong>
           <ArrowRight />
         </a>
       </nav>
@@ -161,7 +180,7 @@ function StudioMenu({
             <Youtube />
           </a>
         </div>
-        <p>Films, photography and social-first campaigns.</p>
+        <p>Ideas, directed. Stories, produced.</p>
       </div>
     </aside>
   );
@@ -223,7 +242,7 @@ function ProjectIndicators({
   );
 }
 
-function VideoPlayer({
+export function VideoPlayer({
   film,
   index,
   onClose,
@@ -433,7 +452,8 @@ export function StudioSite() {
   return (
     <>
       <Loader />
-      <main className="showcase">
+      <main className="home-page">
+      <section className="showcase" aria-label="Featured work">
       <header className="showcase-header">
         <button
           type="button"
@@ -447,7 +467,7 @@ export function StudioSite() {
           <a href="./" className="showcase-wordmark">
             JAY STUDIO
           </a>
-          <p>Production studio</p>
+          <p>Creative direction &amp; production</p>
         </div>
         <div className="showcase-header__actions">
           <div className="showcase-socials">
@@ -524,20 +544,13 @@ export function StudioSite() {
         </span>
       </div>
 
-      <button
-        className="floating-contact floating-contact--desktop"
-        type="button"
-        onClick={openContact}
-      >
-        Contact Us
-      </button>
-      <button
-        className="floating-contact floating-contact--mobile"
-        type="button"
-        onClick={openContact}
-      >
-        Contact Us
-      </button>
+      <a className="floating-case-studies" href="/case-studies">
+        Selected Work <ArrowRight />
+      </a>
+
+      </section>
+      <div className="home-scroll-spacer" aria-hidden="true" />
+      <HomeFooterOverlay />
 
       <StudioMenu
         open={menuOpen}
