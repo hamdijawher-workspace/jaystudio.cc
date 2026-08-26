@@ -3,10 +3,10 @@
 import { ArrowRight, Mail, MessageCircle, X } from "lucide-react";
 
 export const contactEmail =
-  "mailto:hamdijawher@icloud.com?subject=Project%20enquiry%20for%20JAY%20STUDIO";
+  "mailto:hamdijawher@icloud.com?subject=Project%20enquiry%20for%20MPRV%20Co.";
 
 const contactWhatsApp =
-  "https://wa.me/21622085367?text=Hello%20JAY%20STUDIO%2C%20I%27d%20like%20to%20discuss%20a%20project.";
+  "https://wa.me/21622085367?text=Hello%20MPRV%20Co.%2C%20I%27d%20like%20to%20discuss%20a%20project.";
 const contactPhone = "tel:+21622085367";
 
 export function ContactSheet({
@@ -30,8 +30,8 @@ export function ContactSheet({
         <button type="button" onClick={onClose} aria-label="Close contact options">
           <X />
         </button>
-        <span>START A PROJECT</span>
-        <h2>Tell us what you want people to feel.</h2>
+        <span>START A PROJECT / MPRV CO.</span>
+        <h2>Tell us what needs to move.</h2>
         <a href={contactPhone}>
           <MessageCircle />
           <strong>Call the studio</strong>

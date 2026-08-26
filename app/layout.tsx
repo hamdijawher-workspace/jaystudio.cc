@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { MprvCursor } from "@/components/mprv-cursor";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "JAY STUDIO | Creative Direction & Production",
+  title: "MPRV Co. | Media, UGC & Production",
   description:
-    "Jay Studio creates and produces visual campaigns through creative direction, film, photography and digital."
+    "MPRV Co. is a digital media agency creating UGC, campaigns, film, photography and social-first content across MENA and worldwide."
 };
 
 export default function RootLayout({
@@ -14,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body><MprvCursor />{children}</body>
     </html>
   );
 }

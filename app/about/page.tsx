@@ -1,5 +1,5 @@
 import { AboutPage } from "@/components/about-page";
 
-export default function StudioPage() {
+export default function About() {
   return <AboutPage />;
 }

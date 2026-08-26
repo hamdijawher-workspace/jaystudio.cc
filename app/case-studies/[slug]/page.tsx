@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { getCaseStudy, caseStudies } from "@/lib/content";
 import { SiteFooter, SiteNav } from "@/components/site-chrome";
 import { Parallax, Reveal } from "@/components/motion";
@@ -19,7 +19,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
   return (
     <main className="case-study-page">
-      <SiteNav dark />
+      <SiteNav />
       <section className="case-study-hero">
         <div className="case-study-hero__copy"><span className="eyebrow">{study.client} / {study.season}</span><div className="case-study-hero__text"><h1>{study.title}</h1><p>{study.positioning}</p></div></div>
         <Parallax className="case-study-hero__media">
@@ -30,7 +30,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       <CaseStudyScrollStory study={study} />
       <section className="deliverables-table"><span className="eyebrow">Complete deliverables</span><h2>Everything created<br />for the campaign.</h2><DeliverablesTable study={study} /></section>
       <a className="case-study-next" href={`/case-studies/${next.slug}`}><span>Next case study</span><strong>{next.client} / {next.title}</strong><ArrowRight /></a>
-      <SiteFooter dark />
+      <SiteFooter />
     </main>
   );
 }
