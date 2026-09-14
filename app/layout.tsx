@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import { MprvCursor } from "@/components/mprv-cursor";
 import "./globals.css";
+import "./cinema.css";
+
+const outfit = localFont({ src: "../public/fonts/Outfit-Variable.ttf", variable: "--font-outfit", display: "swap", weight: "100 900" });
 
 export const metadata: Metadata = {
   title: "MPRV Co. | Media, UGC & Production",
@@ -15,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body><MprvCursor />{children}</body>
+      <body className={outfit.variable}><MprvCursor />{children}</body>
     </html>
   );
 }

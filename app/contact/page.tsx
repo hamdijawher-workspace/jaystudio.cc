@@ -1,7 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { SiteFooter, SiteNav, Wordmark } from "@/components/site-chrome";
 
-const email = "hamdijawher@icloud.com";
+const email = "mprvco@proton.me";
 
 export default function ContactPage() {
   return (
@@ -10,7 +10,7 @@ export default function ContactPage() {
       <section className="contact-options">
         <a href={`mailto:${email}?subject=MPRV%20Co.%20project%20brief`} data-cursor="cta" data-cursor-label="Write us"><span>01 / Email</span><strong>{email}</strong><ArrowUpRight /></a>
         <a href="https://wa.me/21622085367?text=Hello%20MPRV%20Co.%2C%20I%27d%20like%20to%20discuss%20a%20project." target="_blank" rel="noreferrer" data-cursor="cta" data-cursor-label="WhatsApp"><span>02 / WhatsApp</span><strong>+216 22 085 367</strong><ArrowUpRight /></a>
-        <a href="https://www.instagram.com/jaystudio.cc" target="_blank" rel="noreferrer" data-cursor="cta" data-cursor-label="Instagram"><span>03 / Instagram</span><strong>MPRV Co. / Instagram</strong><ArrowUpRight /></a>
+        <a href="https://www.instagram.com/mprvco/" target="_blank" rel="noreferrer" data-cursor="cta" data-cursor-label="Instagram"><span>03 / Instagram</span><strong>MPRV Co. / Instagram</strong><ArrowUpRight /></a>
       </section>
       <section className="contact-note"><span>Where we work</span><p>Working across MENA and worldwide.</p></section>
       <SiteFooter dark />

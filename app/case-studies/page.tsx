@@ -1,5 +1,5 @@
-import { CaseStudiesStack } from "@/components/case-studies-stack";
+import { WorksPage } from "@/components/works-page";
 
 export default function CaseStudies() {
-  return <CaseStudiesStack />;
+  return <WorksPage />;
 }

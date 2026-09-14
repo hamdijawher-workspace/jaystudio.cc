@@ -35,7 +35,7 @@ export const films: Film[] = [
     category: "DELISHIO — SUMMER 26",
     subtitle: "TASTE THE COLD · Creative Direction · Film · Photography",
     image: "/projects/delishio-cover.jpg",
-    previewVideo: "/projects/delishio-web.mp4",
+    previewVideo: "/projects/previews/delishio-web-loop.mp4",
     playbackVideo: "/projects/delishio-web.mp4",
     orientation: "portrait",
     year: "2026"
@@ -45,7 +45,7 @@ export const films: Film[] = [
     category: "AUREA — THE FIRST REVEAL",
     subtitle: "A first glimpse built around colour, character and anticipation",
     image: "/projects/aurea-teaser-cover.jpg",
-    previewVideo: "/projects/aurea-teaser-web.mp4",
+    previewVideo: "/projects/previews/aurea-teaser-web-loop.mp4",
     playbackVideo: "/projects/aurea-teaser-web.mp4",
     orientation: "portrait",
     year: "2026"
@@ -55,7 +55,7 @@ export const films: Film[] = [
     category: "AUREA — BEYOND ORDINARY",
     subtitle: "A controlled reveal from first glimpse to poolside experience",
     image: "/projects/aurea-reveal-cover.jpg",
-    previewVideo: "/projects/aurea-reveal-web.mp4",
+    previewVideo: "/projects/previews/aurea-reveal-web-loop.mp4",
     playbackVideo: "/projects/aurea-reveal-web.mp4",
     orientation: "portrait",
     year: "2026"
@@ -65,7 +65,7 @@ export const films: Film[] = [
     category: "SIDI BOU SAID — THE BLUE STORY",
     subtitle: "Bechir discovers the story behind Tunisia’s blue and white icon",
     image: "/projects/sidi-bou-said-cover.jpg",
-    previewVideo: "/projects/sidi-bou-said.mp4",
+    previewVideo: "/projects/previews/sidi-bou-said-loop.mp4",
     playbackVideo: "/projects/sidi-bou-said.mp4",
     orientation: "portrait",
     year: "2026"

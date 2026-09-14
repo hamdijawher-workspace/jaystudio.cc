@@ -3,7 +3,7 @@
 import { ArrowRight, Mail, MessageCircle, X } from "lucide-react";
 
 export const contactEmail =
-  "mailto:hamdijawher@icloud.com?subject=Project%20enquiry%20for%20MPRV%20Co.";
+  "mailto:mprvco@proton.me?subject=Project%20enquiry%20for%20MPRV%20Co.";
 
 const contactWhatsApp =
   "https://wa.me/21622085367?text=Hello%20MPRV%20Co.%2C%20I%27d%20like%20to%20discuss%20a%20project.";
