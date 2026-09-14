@@ -61,7 +61,7 @@ export function CinematicHome() {
     <section className="cinema-hero" data-cinema-scene>
       <div className="cinema-hero__stage">
         <div className="cinema-hero__picture"><img src="/projects/mprv-pool-hero.jpg" alt="Sunset over a cinematic garden pool overlooking the coast" fetchPriority="high" /><div className="cinema-hero__shade" /></div>
-        <div className="cinema-hero__copy"><span className="cinema-kicker">Independent creative studio / Worldwide</span><h1><span>Hello.</span><strong>Feel something<span className="cinema-dot">.</span></strong></h1><p>Film, creative direction and digital experiences<br />for brands with something to say.</p><a href="#selected-work" className="glass-button">Explore our work <ArrowDown size={16} /></a></div>
+        <div className="cinema-hero__copy"><span className="cinema-kicker">Independent creative studio / MENA + Worldwide</span><h1><span>Welcome to MPRV Co.</span><strong>We make brands felt<span className="cinema-dot">.</span></strong></h1><p>Creative direction, film production, UGC and digital experiences—<br className="cinema-hero__desktop-break" />built for how people watch, share and remember.</p><a href="#selected-work" className="glass-button">View selected work <ArrowDown size={16} /></a></div>
         <div className="cinema-hero__edition"><span>MPRV CO.</span><span>A different point of view.</span></div>
       </div>
     </section>
